@@ -1,0 +1,34 @@
+#read {
+  height: var(--content-height);
+  
+  background-color: var(--company-white);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#read.hide {
+  display: none;
+}
+
+#read h2.title {
+  padding: 4px 0;
+  color: var(--company-blue);
+  text-transform: uppercase;
+}
+
+#read table.item_area {
+  padding: 4px;
+  width: 98%;
+
+  border-radius: 4px;
+  background-color: var(--company-blue);
+}
+
+#read table.item_area * {
+  text-align: center;
+  font-weight: 900;
+  text-shadow: 0 0 3px black;
+}
+
