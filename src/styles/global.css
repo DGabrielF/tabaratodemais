@@ -1,4 +1,4 @@
-@import url("imports.css");
+/* @import url("imports.css"); */
 @import url("./general/sizes.css");
 @import url("./general/colors.css");
 
@@ -6,7 +6,7 @@
 @import url("../components/Base/Menu/Menu.css");
 @import url("../components/Base/Search/Search.css");
 
-@import url("/src/pages/Header/Header.css");
+@import url("../pages/Header/Header.css");
 @import url("../pages/Process/Process.css");
 @import url("../pages/Read/Read.css");
 
