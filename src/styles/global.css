@@ -5,8 +5,14 @@
   margin: 0;
   box-sizing: border-box;
   user-select: none;
+  color: var(--company-white);
+  font-family: monospace;
 }
 
 *.hide {
   display: none;
+}
+
+section {
+  height: var(--content-height);
 }

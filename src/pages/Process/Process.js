@@ -46,36 +46,63 @@ Process.data = [
 ]
 
 Process.create = async () => {
-  const section = ToolsHTML.createElementWithClass("section");
-  section.id = "process"
+  const section = ToolsHTML.createElementWithClass("section", "hide");
+  section.id = "process";
   
   for (const item of Process.data) {
     item.key = ToolsString.slugfy(item.text);
     if (item.options) {
-      for (const option of item.options)
+      for (const option of item.options) {
         option.key = ToolsString.slugfy(option.text);
+      }
     }
   }
 
-  const sideMenu = ToolsHTML.createElementWithClass("div", "side_menu");
-  section.appendChild(sideMenu);
+  Process.sideMenu = ToolsHTML.createElementWithClass("div", "side_menu");
+  section.appendChild(Process.sideMenu);
   const searchParameters = {
     baseArray: Process.data,
-    styledInput: new Entry({placeholder: "Nome do produto", mandatory: false}).create(),
+    styledInput: new Entry(
+      {
+        placeholder: "Processo", 
+        mandatory: false,
+      }
+    ).create(),
+    updateTipFunction: updateMenuItems,
+    showTipArea: false,
   }
   const search = new Search(searchParameters);
-  sideMenu.appendChild(search.create());
+  Process.sideMenu.appendChild(search.create());
 
   const menuParameters = {
-    items: Process.data,
+    items: search.showArray,
     clickFunction: switchContent,
   }
   const menu = new Menu(menuParameters);
-  sideMenu.appendChild(menu.create());
+  Process.sideMenu.appendChild(menu.create());
 
   const content = ToolsHTML.createElementWithClass("div", "content");
   section.appendChild(content);
 
+  function updateMenuItems() {
+    const menuButtons = Process.sideMenu.querySelectorAll(".droppable button");
+    console.log("array", search.showArray)
+    if (!search.showArray) {
+      menuButtons.forEach(element => {
+        element.classList.remove("hide");
+      });
+    } else {
+      menuButtons.forEach(element => {
+        element.classList.add("hide");
+      });
+      for (const item of search.showArray) {
+        const buttonMatch = Array.from(menuButtons).find(button => button.innerText.includes(item.text))
+        buttonMatch.classList.remove("hide");
+        const children = buttonMatch.querySelectorAll("*");
+        children.forEach(child => child.classList.remove("hide"));
+      }
+    }
+  }
   
   return section
 }

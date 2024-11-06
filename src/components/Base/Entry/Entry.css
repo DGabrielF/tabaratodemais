@@ -1,7 +1,6 @@
 .styled_input {
-  padding-top: 20px;
+  padding: 20px 0 2px 0;
   width: 100%;
-  background-color: #cec;
   
   display: flex;
   flex-direction: row-reverse;
@@ -11,10 +10,9 @@
 }
 
 .styled_label {
-  padding: 0 2px;
+  padding: 0 4px;
   
   opacity: 1;
-  background-color: #eec;
   
   position: absolute;
   bottom: calc(100% - 20px);
@@ -34,7 +32,10 @@
 
 .styled_field {
   padding: 0 2px;
-  width: 100%;
+  width: 98%;
+
+  border-radius: 5px;
+  border: 1px solid #00000044;
   background-color: #cce;
 }
 

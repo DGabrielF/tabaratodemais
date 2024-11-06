@@ -128,7 +128,6 @@ export class Menu {
     submenus.forEach(element => {
       if (!element.classList.contains("hide")) {
         element.classList.add("hide");
-        console.log("click")
       }
     });
   }

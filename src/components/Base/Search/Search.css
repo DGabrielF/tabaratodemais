@@ -1,0 +1,15 @@
+.search {
+  width: 100%;
+
+  position: relative;
+}
+
+.search *.hide {
+  display: none;
+}
+
+.search .tip_area {
+  width: 100%;
+  background-color: green;
+  position: absolute;
+}
