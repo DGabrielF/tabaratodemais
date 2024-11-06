@@ -81,7 +81,6 @@ Read.create = () => {
       bgColor = "#cdab00";
     }
 
-
     item.style.backgroundColor = bgColor;
  
     tableBody.appendChild(item);
