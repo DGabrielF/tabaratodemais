@@ -6,7 +6,12 @@ export const Header = {
 }
 
 Header.create = () => {
-  const header = ToolsHTML.createElementWithClass("div", "menu");
+  const header = ToolsHTML.createElementWithClass("div", "header");
+
+  const logo = ToolsHTML.createElementWithClass("img", "logo");
+  logo.src = "src/assets/images/logo.png";
+  logo.alt = "logo";
+  header.appendChild(logo)
 
   const menuParameters = {
     items: [
@@ -29,11 +34,17 @@ Header.create = () => {
         ]
       },
       {
+        text: "folgas",
+        key: "retired"
+      },
+      {
         text: "procedimentos",
         key: "process"
       }
     ],
-    clickFunction: switchPage
+    clickFunction: switchPage,
+    openIconSrc: "src/assets/icons/menu.svg",
+    closeIconSrc: "src/assets/icons/close.svg",
   }
   const menu = new Menu(menuParameters)
   header.appendChild(menu.create());

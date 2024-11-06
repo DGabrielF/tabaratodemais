@@ -104,11 +104,11 @@ export class Menu {
         }
       })
 
-      item.options.forEach((suboption) => {
+      item.options.forEach((subOption) => {
         const button = this.#createElementWithClass("button");
-        button.textContent = suboption.text;
-        button.addEventListener("click", () =>{
-          this.clickFunction(suboption.key);
+        button.textContent = subOption.text;
+        button.addEventListener("click", () => {
+          this.clickFunction(subOption.key);
           this.#closeAllSubmenus();
           this.#hideOptionArea();
         })
@@ -128,6 +128,7 @@ export class Menu {
     submenus.forEach(element => {
       if (!element.classList.contains("hide")) {
         element.classList.add("hide");
+        console.log("click")
       }
     });
   }

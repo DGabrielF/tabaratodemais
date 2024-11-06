@@ -1,0 +1,88 @@
+.header {
+  height: var(--header-height);
+  background-color: var(--company-blue);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header .logo {
+  height: 75%;
+}
+
+.header .menu {
+  height: 24%;
+}
+
+.header .menu > button {
+  margin-left: 4px;
+  background-color: transparent;
+  border: none;
+}
+
+.header .droppable {
+  height: 100%;
+  justify-content: center;
+  gap: 4px;
+}
+
+.header .droppable button {
+  height: 100%;
+  width: 100%;
+
+  color: var(--company-blue);
+  text-shadow: 0px 0px 1px #000000;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  position: relative;
+}
+
+.header .droppable button .submenu {
+  width: 100%;
+      
+  background-color: var(--company-blue);
+
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  z-index: 2;
+}
+
+.header .droppable button .submenu button {
+  width: 100%;
+  margin-top: 2px;
+
+  font-size: smaller;
+}
+
+@media only screen and (max-width: 599px) {
+  .header .menu > button {
+    height: 100%;
+    aspect-ratio: 1;
+  }
+  .header .droppable.show {
+    height: auto;
+    width: 100%;
+
+    background-color: var(--company-blue);
+  }
+
+  .header .droppable button {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .header .droppable button .submenu {
+    width: 100%;
+  
+    position: relative;
+  }
+}
