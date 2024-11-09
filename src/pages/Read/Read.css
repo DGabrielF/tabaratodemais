@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position: relative;
 }
 
 #read.hide {
@@ -16,6 +18,42 @@
   padding: 4px 0;
   color: var(--company-blue);
   text-transform: uppercase;
+}
+
+#read button.add_fixed {
+  padding: 2px;
+  width: auto;
+  height: 23px;
+  
+  background-color: #00aa00;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 2px black;
+  
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  position: absolute;
+  top: 4px;
+  right: 1%;
+  
+  cursor: pointer;
+}
+
+#read button.add_fixed span {
+  padding-left: 4px;
+  color: var(--company-white);
+
+  display: none;
+}
+
+#read button.add_fixed:hover span {
+  display: block; 
+}
+
+#read button.add_fixed img {
+  height: 100%;
 }
 
 #read table.item_area {
@@ -31,4 +69,3 @@
   font-weight: 900;
   text-shadow: 0 0 3px black;
 }
-

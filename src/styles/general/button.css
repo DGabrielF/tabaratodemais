@@ -1,0 +1,24 @@
+button {
+  width: 100%;
+  padding: 2px 0;
+
+  text-transform: uppercase;
+
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 0 2px black;
+
+  cursor: pointer;
+}
+
+button.confirm {
+  background-color: var(--company-blue);
+}
+
+button.deny {
+  background-color: var(--company-red);
+}
+
+button.danger {
+  background-color: black;
+}

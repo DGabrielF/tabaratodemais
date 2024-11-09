@@ -17,21 +17,7 @@ Header.create = () => {
     items: [
       {
         text: "vencimento",
-        key: "over",
-        options: [          
-          {
-            text: "lista",
-            key: "read"
-          },
-          {
-            text: "adicionar",
-            key: "add"
-          },
-          {
-            text: "editar",
-            key: "edit"
-          }
-        ]
+        key: "read",
       },
       {
         text: "folgas",

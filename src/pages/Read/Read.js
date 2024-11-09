@@ -1,4 +1,5 @@
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js";
+import { Edit } from "../Edit/Edit.js";
 
 export const Read = {
   create: () => {},
@@ -39,12 +40,31 @@ export const Read = {
 Read.create = () => {
   const today = new Date().setHours(0, 0, 0, 0);
 
+  const body = document.querySelector("body");
+
+  const editSection = Edit;
+  body.appendChild(editSection.create());
+
   const section = ToolsHTML.createElementWithClass("section");
   section.id = "read";
 
   const title = ToolsHTML.createElementWithClass("h2", "title");
   title.textContent = "Lista de Produtos";  
   section.appendChild(title);
+  
+  const addProductButton = ToolsHTML.createElementWithClass("button", "add_fixed");
+  addProductButton.addEventListener("click", () => {
+    editSection.open();
+  })
+  section.appendChild(addProductButton);
+
+  const addProductButtonSpan = ToolsHTML.createElementWithClass("span");
+  addProductButtonSpan.textContent = "Adicionar Produto";
+  addProductButton.appendChild(addProductButtonSpan);
+
+  const addProductButtonIcon = ToolsHTML.createElementWithClass("img");
+  addProductButtonIcon.src = "src/assets/icons/plus.svg";
+  addProductButton.appendChild(addProductButtonIcon);
 
   const itemTable = ToolsHTML.createElementWithClass("table", "item_area");
   section.appendChild(itemTable);
@@ -67,6 +87,9 @@ Read.create = () => {
   Read.data = sortByFormatedDate(Read.data, 'over');
   for (let i = 0; i < Read.data.length; i++) {
     const item = createItem(Read.data[i]);
+    item.addEventListener("click", () => {
+      editSection.open(Read.data[i])
+    })
     const overDate = new Date(Read.data[i].over.split('/').reverse().join('-')).setHours(24, 0, 0, 0);
     const difference = daysBetween(today, overDate);
 

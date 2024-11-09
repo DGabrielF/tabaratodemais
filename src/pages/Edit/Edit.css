@@ -1,0 +1,63 @@
+#edit {
+  width: 80%;
+  height: auto;
+  padding: 14px 8px;
+  
+  background-color: var(--company-white);
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+#edit.hide {
+  display: none;
+}
+
+.fade {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000000aa;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#edit h2.title {
+  padding: 4px 0;
+  color: var(--company-blue);
+  text-transform: uppercase;
+}
+
+#edit .styled_input > * {
+  color: black;
+  text-align: center;
+}
+
+#edit .styled_input input:disabled {
+  color: var(--company-blue);
+  background-color: transparent;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+#edit .button_area {
+  margin-top: 14px;
+  width: 98%;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
