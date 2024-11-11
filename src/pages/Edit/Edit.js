@@ -1,4 +1,5 @@
 import { Entry } from "../../components/Base/Entry/Entry.js";
+import { Firestore } from "../../scripts/services/firebase/firestore.js";
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js"
 export const Edit = {
   create: () => {},
@@ -20,28 +21,33 @@ Edit.create = () => {
     placeholder: "nome do produto",
     mandatory: true,
   };
-  Edit.name = new Entry(nameParameters).create();
-  Edit.section.appendChild(Edit.name);
+  const name = new Entry(nameParameters).create();
+  Edit.name = name.querySelector("input");
+  Edit.section.appendChild(name);
 
   const overParameters = {
     placeholder: "validade do produto",
     mandatory: true
   };
-  Edit.over = new Entry(overParameters).create();
-  Edit.section.appendChild(Edit.over);
+  const over = new Entry(overParameters).create();
+  Edit.over = over.querySelector("input");
+  Edit.section.appendChild(over);
 
   const quantityParameters = {
     placeholder: "quantidade do produto",
-    mandatory: true
+    mandatory: true,
+    types: "number"
   };
-  Edit.quantity = new Entry(quantityParameters).create();
-  Edit.section.appendChild(Edit.quantity);
+  const quantity = new Entry(quantityParameters).create()
+  Edit.quantity = quantity.querySelector("input");
+  Edit.section.appendChild(quantity);
 
   const buttonArea = ToolsHTML.createElementWithClass("div", "button_area");
   Edit.section.appendChild(buttonArea);
 
   const saveButton = ToolsHTML.createElementWithClass("button", "confirm");
-  saveButton.textContent = "salvar"
+  saveButton.textContent = "salvar";
+  saveButton.addEventListener("click", async () => await Edit.save());
   buttonArea.appendChild(saveButton);
 
   const cancelButton = ToolsHTML.createElementWithClass("button", "deny");
@@ -58,23 +64,22 @@ Edit.create = () => {
 };
 
 Edit.open = (object) => {
+  Edit.newData = (!object);
   Edit.section.classList.remove("hide");
   Edit.fade.classList.remove("hide");
-  const nameInputArea = Edit.name.querySelector("input");
-  const overInputArea = Edit.over.querySelector("input");
-  const quantityInputArea = Edit.quantity.querySelector("input");
-  if (!object) {
+  if (Edit.newData) {
     Edit.title.textContent = "Adicionar Produto";
-    nameInputArea.value = "";
-    nameInputArea.disabled = (object);
-    overInputArea.value = "";
-    quantityInputArea.value = "";
+    Edit.name.value = "";
+    Edit.name.disabled = (object);
+    Edit.over.value = "";
+    Edit.quantity.value = "";
   } else {
+    Edit.data = object;
     Edit.title.textContent = "Editar Produto";
-    nameInputArea.value = object.name;
-    nameInputArea.disabled = (object);
-    overInputArea.value = object.over;
-    quantityInputArea.value = object.quantity;
+    Edit.name.value = object.name;
+    Edit.name.disabled = (object);
+    Edit.over.value = object.over;
+    Edit.quantity.value = object.quantity;
   }
 };
 
@@ -92,3 +97,54 @@ Edit.createFade = () => {
     }
   })
 }
+
+Edit.save = async () => {
+  const entryValues = {
+    history: [],
+  };
+
+  for (const key in Edit) {
+    if (Edit[key] instanceof HTMLElement && Edit[key].classList.contains("styled_field")){
+      entryValues[key] = (Edit[key].type === "number") ? Number(Edit[key].value): Edit[key].value;
+    }
+  }
+  const today = new Date();
+  const date = {
+    weekDay: ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"][today.getDay()],
+    day: today.getDate(),
+    month: today.getMonth(),
+    year: today.getFullYear(),
+    hour: today.getHours(),
+    minute: today.getMinutes(),
+  }
+  
+  if (Edit.newData) {
+    entryValues.date = date;
+    const response = await Firestore.createData("tabaratodemais", entryValues);
+    if (response === "string") {
+      console.log("Erro", response);
+      return;
+    };
+    Edit.close();
+  } else {
+    // Editrar um dado existente
+    entryValues.history = [...Edit.data.history];
+    console.log("Após atualizar o history", entryValues.history)
+    console.log("Edit.data", Edit.data)
+    const historyItem = {
+      ...Edit.data.date
+    }
+    historyItem.quantity = Number(Edit.data.quantity);
+    console.log("historyItem", historyItem)
+    entryValues.history.push(historyItem);
+
+    entryValues.date = date;
+
+    const response = await Firestore.update("tabaratodemais", Edit.data.id, entryValues);
+    if (response) {
+      console.log("Erro", response);
+      return;
+    };
+  }
+}
+

@@ -1,49 +1,21 @@
+import { Firestore } from "../../scripts/services/firebase/firestore.js";
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js";
 import { Edit } from "../Edit/Edit.js";
 
 export const Read = {
-  create: () => {},
-  data: [
-    {
-      name: "iogurt vigor morango 90g",
-      over: "05/11/2024",
-      quantity: 10,
-      createData: "18/10/2024",
-    },
-    {
-      name: "iogurt vigor chocolate 90g",
-      over: "06/11/2024",
-      quantity: 72,
-      createData: "18/10/2024",
-    },
-    {
-      name: "danone itambé 900ml",
-      over: "07/11/2024",
-      quantity: 41,
-      createData: "18/10/2024",
-    },
-    {
-      name: "danette 360g",
-      over: "08/11/2024",
-      quantity: 12,
-      createData: "18/10/2024",
-    },
-    {
-      name: "danette branco 360g",
-      over: "08/11/2024",
-      quantity: 4,
-      createData: "18/10/2024",
-    },
-  ]
+  create: async () => {},
+  data: []
 };
 
-Read.create = () => {
-  const today = new Date().setHours(0, 0, 0, 0);
+Read.create = async () => {
+  Read.data = await Firestore.fetchDataFromFirebase("tabaratodemais");
+
+  Firestore.realTimeListener("tabaratodemais", realTimeUpdate)
 
   const body = document.querySelector("body");
 
-  const editSection = Edit;
-  body.appendChild(editSection.create());
+  Read.editSection = Edit;
+  body.appendChild(Read.editSection.create());
 
   const section = ToolsHTML.createElementWithClass("section");
   section.id = "read";
@@ -54,7 +26,7 @@ Read.create = () => {
   
   const addProductButton = ToolsHTML.createElementWithClass("button", "add_fixed");
   addProductButton.addEventListener("click", () => {
-    editSection.open();
+    Read.editSection.open();
   })
   section.appendChild(addProductButton);
 
@@ -82,20 +54,30 @@ Read.create = () => {
     headerLine.appendChild(th);
   })
 
-  const tableBody = ToolsHTML.createElementWithClass("thead", "table_body");
-  itemTable.appendChild(tableBody);
+  Read.tableBody = ToolsHTML.createElementWithClass("thead", "table_body");
+  itemTable.appendChild(Read.tableBody);
+  updateList();
+
+  return section;
+};
+
+function updateList() {
+  const today = new Date().setHours(0, 0, 0, 0);
   Read.data = sortByFormatedDate(Read.data, 'over');
+  Read.tableBody.innerHTML = "";
+
   for (let i = 0; i < Read.data.length; i++) {
     const item = createItem(Read.data[i]);
+    item.setAttribute("data-key", Read.data[i].id);
     item.addEventListener("click", () => {
-      editSection.open(Read.data[i])
-    })
+      Read.editSection.open(Read.data[i]);
+    });
     const overDate = new Date(Read.data[i].over.split('/').reverse().join('-')).setHours(24, 0, 0, 0);
     const difference = daysBetween(today, overDate);
 
     let bgColor = "transparent";
     if (difference < 0) {
-      bgColor = "#770077"
+      bgColor = "#770077";
     } else if (difference === 0) {
       bgColor = "#ff0000";
     } else if (difference < 2) {
@@ -105,12 +87,26 @@ Read.create = () => {
     }
 
     item.style.backgroundColor = bgColor;
- 
-    tableBody.appendChild(item);
-  }
 
-  return section;
-};
+    Read.tableBody.appendChild(item);
+  }
+}
+
+function realTimeUpdate(content) {
+  const uniqueData = [];
+
+  const ids = new Set();
+
+  content.forEach((item) => {
+    if (!ids.has(item.id)) {
+      ids.add(item.id);
+      uniqueData.push(item);
+    }
+  })
+
+  Read.data = uniqueData;
+  updateList();
+}
 
 function sortByFormatedDate(array, dataKey) {
   return array.sort((a, b) => {

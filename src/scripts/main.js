@@ -8,12 +8,11 @@ async function init () {
   const header = Header.create();
   body.appendChild(header)
 
-  const readSection = Read.create();
+  const readSection = await Read.create();
   body.appendChild(readSection);
 
   const processSection = await Process.create();
   body.appendChild(processSection);
-
 };
 
 init();
