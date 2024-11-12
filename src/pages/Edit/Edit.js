@@ -56,7 +56,8 @@ Edit.create = () => {
   buttonArea.appendChild(cancelButton);
 
   const deleteButton = ToolsHTML.createElementWithClass("button", "danger");
-  deleteButton.textContent = "excluir"
+  deleteButton.textContent = "excluir";
+  deleteButton.addEventListener("click", Edit.remove);
   buttonArea.appendChild(deleteButton);
 
 
@@ -145,6 +146,15 @@ Edit.save = async () => {
       console.log("Erro", response);
       return;
     };
+    Edit.close();
   }
 }
 
+Edit.remove = async () => {
+  const response = await Firestore.delete("tabaratodemais", Edit.data.id);
+    if (response) {
+      console.log("Erro", response);
+      return;
+    };
+    Edit.close();
+}
