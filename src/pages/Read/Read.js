@@ -1,3 +1,5 @@
+import { Entry } from "../../components/Base/Entry/Entry.js";
+import { Search } from "../../components/Base/Search/Search.js";
 import { Firestore } from "../../scripts/services/firebase/firestore.js";
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js";
 import { Edit } from "../Edit/Edit.js";
@@ -38,9 +40,28 @@ Read.create = async () => {
   addProductButtonIcon.src = "src/assets/icons/plus.svg";
   addProductButton.appendChild(addProductButtonIcon);
 
+  const searchBar = ToolsHTML.createElementWithClass("div", "search");
+  section.appendChild(searchBar);
+
+  const searchParameters = {
+    baseArray: Read.data,
+    styledInput: new Entry(
+      {
+        placeholder: "Nome do Produto", 
+        mandatory: false,
+      }
+    ).create(),
+    updateTipFunction: updateTipList,
+    showTipArea: false,
+    filterAttributes: "name"
+  }
+  const search = new Search(searchParameters);
+
+  searchBar.appendChild(search.create());
+
   const itemTable = ToolsHTML.createElementWithClass("table", "item_area");
   section.appendChild(itemTable);
-
+  
   const tableHeader = ToolsHTML.createElementWithClass("thead", "table_header");
   itemTable.appendChild(tableHeader);
 
@@ -58,21 +79,35 @@ Read.create = async () => {
   itemTable.appendChild(Read.tableBody);
   updateList();
 
+  function updateTipList() {
+    if (!search.showArray) {
+      updateList(Read.data, true);
+    } else {
+      updateList(search.showArray, (search.showArray.length === Read.data.length));
+    }
+  }
+
   return section;
 };
 
-function updateList() {
+function updateList(array, ignoreWithNoQuantity = true) {
   const today = new Date().setHours(0, 0, 0, 0);
   Read.data = sortByFormatedDate(Read.data, 'over');
   Read.tableBody.innerHTML = "";
 
-  for (let i = 0; i < Read.data.length; i++) {
-    const item = createItem(Read.data[i]);
-    item.setAttribute("data-key", Read.data[i].id);
+  const listToShow = array ? sortByFormatedDate(array, 'over') : Read.data;
+
+  for (let i = 0; i < listToShow.length; i++) {
+    if (ignoreWithNoQuantity) {
+      if (listToShow[i].quantity === 0) continue;
+    }
+
+    const item = createItem(listToShow[i]);
+    item.setAttribute("data-key", listToShow[i].id);
     item.addEventListener("click", () => {
-      Read.editSection.open(Read.data[i]);
+      Read.editSection.open(listToShow[i]);
     });
-    const overDate = new Date(Read.data[i].over.split('/').reverse().join('-')).setHours(24, 0, 0, 0);
+    const overDate = new Date(listToShow[i].over.split('/').reverse().join('-')).setHours(24, 0, 0, 0);
     const difference = daysBetween(today, overDate);
 
     let bgColor = "transparent";
@@ -105,7 +140,7 @@ function realTimeUpdate(content) {
   })
 
   Read.data = uniqueData;
-  updateList();
+  updateList(Read.data, true);
 }
 
 function sortByFormatedDate(array, dataKey) {

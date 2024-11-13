@@ -6,6 +6,7 @@ export class Search {
     updateTipFunction = console.log,
     styledInput,
     showTipArea,
+    filterAttributes,
   }) {
     this.baseArray = baseArray;
     this.showArray = showArray;
@@ -13,6 +14,7 @@ export class Search {
     this.updateTipFunction = updateTipFunction;
     this.styledInput = styledInput;
     this.showTipArea = showTipArea;
+    this.filterAttributes = filterAttributes || "text";
   }
 
   create() {
@@ -37,7 +39,7 @@ export class Search {
   }
 
   updateTip(event) {
-    const filtered = this.#filterItems(event.target.value, this.baseArray, ["text"])
+    const filtered = this.#filterItems(event.target.value, this.baseArray)
     this.showArray = filtered.length > 0 ? filtered : false;
     
     if (this.showTipArea) {
@@ -48,15 +50,16 @@ export class Search {
     }
   }
 
-  #filterItems(text, array, attribute = 'text') {
+  #filterItems(text, array) {
+    
     return array.filter(item => {
-        const matchText = typeof item[attribute] === 'string' && this.#slugfy(item[attribute]).includes(this.#slugfy(text));
+        const matchText = typeof item[this.filterAttributes] === 'string' && this.#slugfy(item[this.filterAttributes]).includes(this.#slugfy(text));
         
         const matchAtributosAninhados = Object.values(item).some(value => {
             if (typeof value === 'object' && value !== null) {
                 return Array.isArray(value)
-                    ? this.#filterItems(text, value, attribute).length > 0
-                    : this.#filterItems(text, [value], attribute).length > 0;
+                    ? this.#filterItems(text, value, this.filterAttributes).length > 0
+                    : this.#filterItems(text, [value], this.filterAttributes).length > 0;
             }
             return false;
         });
@@ -72,7 +75,7 @@ export class Search {
     this.#updateTipArea();
   }
 
-  #updateTipArea(attribute = 'text') {
+  #updateTipArea() {
     this.tipArea.innerHTML = "";
     for (const item of !this.showArray ? this.baseArray : this.showArray) {
       const listItem = this.#createElementWithClass("li");
@@ -80,7 +83,7 @@ export class Search {
         this.clickFunction(item);
         this.tipArea.classList.add("hide");
       })
-      listItem.textContent = item[attribute];
+      listItem.textContent = item[this.filterAttributes];
       this.tipArea.appendChild(listItem)
     }
   }

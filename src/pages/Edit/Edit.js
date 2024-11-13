@@ -55,10 +55,10 @@ Edit.create = () => {
   cancelButton.addEventListener("click", Edit.close);
   buttonArea.appendChild(cancelButton);
 
-  const deleteButton = ToolsHTML.createElementWithClass("button", "danger");
-  deleteButton.textContent = "excluir";
-  deleteButton.addEventListener("click", Edit.remove);
-  buttonArea.appendChild(deleteButton);
+  Edit.deleteButton = ToolsHTML.createElementWithClass("button", "danger");
+  Edit.deleteButton.textContent = "excluir";
+  Edit.deleteButton.addEventListener("click", Edit.remove);
+  buttonArea.appendChild(Edit.deleteButton);
 
 
   return Edit.fade;
@@ -74,6 +74,7 @@ Edit.open = (object) => {
     Edit.name.disabled = (object);
     Edit.over.value = "";
     Edit.quantity.value = "";
+    Edit.deleteButton.disabled = true;
   } else {
     Edit.data = object;
     Edit.title.textContent = "Editar Produto";
@@ -81,6 +82,7 @@ Edit.open = (object) => {
     Edit.name.disabled = (object);
     Edit.over.value = object.over;
     Edit.quantity.value = object.quantity;
+    Edit.deleteButton.disabled = false;
   }
 };
 

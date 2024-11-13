@@ -86,7 +86,6 @@ Process.create = async () => {
 
   function updateMenuItems() {
     const menuButtons = Process.sideMenu.querySelectorAll(".droppable button");
-    console.log("array", search.showArray)
     if (!search.showArray) {
       menuButtons.forEach(element => {
         element.classList.remove("hide");
@@ -96,12 +95,13 @@ Process.create = async () => {
         element.classList.add("hide");
       });
       for (const item of search.showArray) {
-        const buttonMatch = Array.from(menuButtons).find(button => button.innerText.includes(item.text))
+        const buttonMatch = Array.from(menuButtons).find(button => button.innerText.toUpperCase().includes(item.text.toUpperCase()));
         buttonMatch.classList.remove("hide");
         const children = buttonMatch.querySelectorAll("*");
         children.forEach(child => child.classList.remove("hide"));
       }
     }
+    console.log(search.showArray)
   }
   
   return section
