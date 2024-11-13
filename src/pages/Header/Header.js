@@ -19,10 +19,10 @@ Header.create = () => {
         text: "vencimento",
         key: "read",
       },
-      {
-        text: "folgas",
-        key: "retired"
-      },
+      // {
+      //   text: "folgas",
+      //   key: "retired"
+      // },
       {
         text: "procedimentos",
         key: "process"

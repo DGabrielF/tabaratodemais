@@ -77,6 +77,8 @@ Process.create = async () => {
   const menuParameters = {
     items: search.showArray,
     clickFunction: switchContent,
+    openIconSrc: "src/assets/icons/menu.svg",
+    closeIconSrc: "src/assets/icons/close.svg",
   }
   const menu = new Menu(menuParameters);
   Process.sideMenu.appendChild(menu.create());

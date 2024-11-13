@@ -22,7 +22,7 @@
   width: 25vw;
 
   border-right: 1px solid #00000044;
-  background-color: #00000022;
+  background-color: #eeeeee;
 }
 
 #process .droppable {
@@ -52,7 +52,7 @@
 }
 
 #process .content {
-  padding: 8px;
+  padding: 8px 8px 40px 8px;
   height: 100%;
   width: 75vw;
 
@@ -65,18 +65,63 @@
 }
 
 @media only screen and (max-width: 599px) {
-  #process .side_menu .droppable {
+  #process {
+    flex-direction: column;
+  }
+
+  #process .styled_input {
+    padding: 18px 4px 2px 4px;
+  }
+
+  #process .side_menu {
+    width: 100vw;
+    height: calc(22px + 17.261px);
+
+    border-right: none;
+    border-bottom: 1px solid #00000044;
+
     display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #process .side_menu .menu {
+    width: auto;
+  }
+
+  #process .side_menu .menu > button {
+    margin: calc(17.261px / 2);
+    height: 22px;
+    width: 22px;
+  }
+
+  #process .side_menu .menu > .open {
+    background-color: var(--company-blue);
+  }
+
+  #process .side_menu .menu > .close {
+    background-color: var(--company-red);
+  }
+
+  #process .side_menu .droppable {
+    width: 100vw;
+    display: none;
+    background-color: #eeeeee;
   }
   
   #process .side_menu .droppable.show {
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: absolute;
+    right: 0;
     z-index: 0;
   }
-
+  
   #process .side_menu > button {
     display: none;
+  }
+
+  #process .content {
+    width: 100%;
   }
 }

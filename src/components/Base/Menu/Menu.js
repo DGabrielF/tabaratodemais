@@ -31,7 +31,7 @@ export class Menu {
   }
 
   #createMenuIcon() {
-    this.menuIcon = this.#createElementWithClass("button");
+    this.menuIcon = this.#createElementWithClass("button", "open");
     this.menuIcon.addEventListener("click", () => {
       this.#showOptionArea();
     });
@@ -55,7 +55,8 @@ export class Menu {
   }
 
   #createCloseMenuIcon() {
-    this.closeIcon = this.#createElementWithClass("button", "hide");
+    this.closeIcon = this.#createElementWithClass("button", "close");
+    this.closeIcon.classList.add("hide")
     this.closeIcon.addEventListener("click", () => {
       this.#hideOptionArea();
     });
