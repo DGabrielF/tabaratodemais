@@ -1,4 +1,5 @@
 import { Entry } from "../../components/Base/Entry/Entry.js";
+import { Toast } from "../../components/Base/Toast/Toast.js";
 import { Firestore } from "../../scripts/services/firebase/firestore.js";
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js"
 export const Edit = {
@@ -60,6 +61,9 @@ Edit.create = () => {
   Edit.deleteButton.addEventListener("click", Edit.remove);
   buttonArea.appendChild(Edit.deleteButton);
 
+  Edit.toast = new Toast({ignoreFade: true, durationMS: 1000});
+  const body = document.querySelector("body");
+  body.appendChild(Edit.toast.create());
 
   return Edit.fade;
 };
@@ -126,19 +130,18 @@ Edit.save = async () => {
     const response = await Firestore.createData("tabaratodemais", entryValues);
     if (response === "string") {
       console.log("Erro", response);
+      Edit.toast.show({title: "Erro", text: response, type: "error"});
       return;
+    } else {
+      Edit.toast.show({title: "Sucesso", text: "Produto Adicionado", type: "success"});
     };
     Edit.close();
   } else {
-    // Editrar um dado existente
     entryValues.history = [...Edit.data.history];
-    console.log("Após atualizar o history", entryValues.history)
-    console.log("Edit.data", Edit.data)
     const historyItem = {
       ...Edit.data.date
     }
     historyItem.quantity = Number(Edit.data.quantity);
-    console.log("historyItem", historyItem)
     entryValues.history.push(historyItem);
 
     entryValues.date = date;
@@ -146,7 +149,10 @@ Edit.save = async () => {
     const response = await Firestore.update("tabaratodemais", Edit.data.id, entryValues);
     if (response) {
       console.log("Erro", response);
+      Edit.toast.show({title: "Erro", text: response, type: "error"});
       return;
+    } else {
+      Edit.toast.show({title: "Sucesso", text: "Produto Modificado", type: "success"});
     };
     Edit.close();
   }
@@ -156,7 +162,10 @@ Edit.remove = async () => {
   const response = await Firestore.delete("tabaratodemais", Edit.data.id);
     if (response) {
       console.log("Erro", response);
+      Edit.toast.show({title: "Erro", text: response, type: "error"});
       return;
+    } else {
+      Edit.toast.show({title: "Sucesso", text: "Produto Removido", type: "success"});
     };
     Edit.close();
 }

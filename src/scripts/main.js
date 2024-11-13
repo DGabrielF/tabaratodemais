@@ -15,8 +15,21 @@ async function init () {
   const processSection = await Process.create();
   body.appendChild(processSection);
 
-  const toast = new Toast({ignoreFade: false});
-  body.appendChild(toast.create())
+  const button = document.createElement("button");
+  button.textContent = "teste";
+  button.style.position = "absolute";
+  button.style.width = "50px";
+  button.style.top = "50px";
+  button.style.left = "10px";
+  button.style.backgroundColor = "blue";
+  button.style.color = "white";
+  
+  body.appendChild(button)
+
+  const toast = new Toast({ignoreFade: false, durationMS: 1000});
+  body.appendChild(toast.create());
+
+  button.addEventListener("click", () => toast.show({}))
 };
 
 init();

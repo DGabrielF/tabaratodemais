@@ -4,6 +4,7 @@
 @import url("../components/Base/Entry/Entry.css");
 @import url("../components/Base/Menu/Menu.css");
 @import url("../components/Base/Search/Search.css");
+@import url("../components/Base/Toast/Toast.css");
 
 @import url("./general/button.css");
 
@@ -24,6 +25,10 @@
 
 *.hide {
   display: none;
+}
+
+body {
+  overflow: hidden;
 }
 
 section {

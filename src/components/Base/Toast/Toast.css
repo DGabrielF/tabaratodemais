@@ -1,0 +1,62 @@
+.toast {
+  width: 80%;
+  height: 30%;
+
+  background-color: #1b1bff22;
+  border: 1px solid #000000af;
+  border-radius: 8px;
+
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, -5%);
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.toast.hide {
+  display: none;
+}
+
+.toast.start-input-animation {
+  animation: inputAnimation 1s forwards;
+}
+
+.toast.start-output-animation {
+  animation: outputAnimation 1s forwards;
+}
+
+.fade {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+@keyframes inputAnimation {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  to { 
+    opacity: 1; 
+    transform: translate(-50%, -5%);
+  }
+}
+
+@keyframes outputAnimation {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -5%);
+  }
+  to { 
+    opacity: 0; 
+    transform: translate(-50%, 100%);
+  }
+}
