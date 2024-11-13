@@ -22,14 +22,21 @@ export const Firestore = {
 Firestore.realTimeListener = (collectionName, updateFunction) => {
   const matchCollection = collection(db, collectionName);
 
-  const updatedData = [];
+  let updatedData = [];
   onSnapshot(matchCollection, (snap) => {
+    snap.docChanges().forEach((change) => {
+      const docData = { id: change.doc.id, ...change.doc.data() };
 
-    snap.forEach((doc) => {
-      updatedData.push({
-        id: doc.id,
-        ...doc.data()
-      })
+      if (change.type === 'added') {
+        updatedData.push(docData);
+      } else if (change.type === 'modified') {
+        const index = updatedData.findIndex(item => item.id === docData.id);
+        if (index !== -1) {
+          updatedData[index] = docData;
+        }
+      } else if (change.type === 'removed') {
+        updatedData = updatedData.filter(item => item.id !== docData.id);
+      }
     });
     updateFunction(updatedData);
   });
