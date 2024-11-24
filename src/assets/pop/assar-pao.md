@@ -14,7 +14,7 @@
 - Fechar a porta e mover a maçaneta até ouvir o som do trinco
 - Acionar duas vezes o botão do vapor
 - A temperatura irá baixar
-- Aguarde até que o forno atinja 180 graus novamente
+- Aguarde até que o forno atinja 180 graus novamente (cerca de 12 minutos)
 - Remova as formas de pão
 - Verifique se há mais algo para assar
 - Em caso afirmativo, deixe o forno fechado enquanto termina este procedimento e inicie o próximo
@@ -22,6 +22,6 @@
 
 ## Etapa 3: Descanso Pós Forno
 - Após remover as formas do forno coloque-as separadas para que esfriem lentamente
-- Evite vento e pesos sobre os pães para que eles se mantenhas firmes e não amassem
+- Evite vento e pesos sobre os pães para que eles se mantenham firmes e não amassem
 - Você ouvirá o som das crostas trincando
 - Disponha os pães para os clientes

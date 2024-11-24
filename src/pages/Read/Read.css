@@ -133,6 +133,12 @@
   margin-top: 2px;
 }
 
+#read table.item_area .table_body tr {
+  border: 1px solid #00000044;
+  border-radius: 4px;
+  cursor: pointer;  
+}
+
 #read table.item_area tr .name {
   width: 100%;
 }

@@ -2,12 +2,11 @@
 
 ## FERMENTAÇÃO
 ### Etapa 1: Tempos de Fermentação
-| Cor do pão    | Tempo de Fermentação | Retirar para Assar 8 h | Retirar para Assar 18 h |
+| Cor do pão    | Tempo de Fermentação | Retirar para Assar 7 h | Retirar para Assar 18 h |
 | ------------- | -------------------- | ---------------------- | ----------------------- | 
-| Preto         | 18:00                | 13:00 às 14:00         |            --           |     
-| Vermelho      | 8:00                 | --                     | 9:00 às 10:00           |
-| Amarelo       |                      |          |           |
-| Azul          |                      |          |           |
+| Vermelho      |        08:00         |           --           |       9:00 às 11:00     |
+| Preto         |        10:00         |     19:30 às 21:00     |            --           |     
+| Amarelo       |        18:00         |     14:30 às 16:00     |            --           |
 
 *obs.: Em dias mais frios os pães demoram um pouco mais para fermentar, opte sempre por retirá-los mais cedo.*
 
