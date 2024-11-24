@@ -68,10 +68,13 @@ Read.create = async () => {
   const headerLine = ToolsHTML.createElementWithClass("tr");
   tableHeader.appendChild(headerLine);
 
-  const headerTitles = ["Produto", "Validade", "Quantidade"];
+  const headerTitles = [
+    {text: "Produto", key: "name"}, 
+    {text: "Validade", key: "over"}, 
+    {text: "Quant", key: "quantity"}];
   headerTitles.forEach( item => {
-    const th = ToolsHTML.createElementWithClass("th");
-    th.textContent = item;
+    const th = ToolsHTML.createElementWithClass("th", item.key);
+    th.textContent = item.text;
     headerLine.appendChild(th);
   })
 
