@@ -28,6 +28,7 @@ Edit.create = () => {
 
   const overParameters = {
     placeholder: "validade do produto",
+    types: "date",
     mandatory: true
   };
   const over = new Entry(overParameters).create();
@@ -112,7 +113,15 @@ Edit.save = async () => {
 
   for (const key in Edit) {
     if (Edit[key] instanceof HTMLElement && Edit[key].classList.contains("styled_field")){
-      entryValues[key] = (Edit[key].type === "number") ? Number(Edit[key].value): Edit[key].value;
+      if (Edit[key].type === "number") {
+        entryValues[key] = Number(Edit[key].value);
+      } else if (Edit[key].type === "number") {
+        const [year, month, day] = object.over.split("-");
+        const formattedDate = `${day}/${month}/${year}`;
+        entryValues[key] = formattedDate;
+      } else {
+        entryValues[key] = Edit[key].value;
+      }
     }
   }
   const today = new Date();

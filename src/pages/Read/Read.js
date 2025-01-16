@@ -168,7 +168,13 @@ function createItem({name , over, quantity}) {
   item.appendChild(itemName);
   
   const itemOver = ToolsHTML.createElementWithClass("td", "over");
-  itemOver.textContent = over;
+  if (over.includes("-")) {
+    const [year, month, day] = over.split("-");
+    const formattedDate = `${day}/${month}/${year}`;
+    itemOver.textContent = formattedDate;
+  } else {
+    itemOver.textContent = over;
+  }
   item.appendChild(itemOver);
   
   const itemQuantity = ToolsHTML.createElementWithClass("td", "quantity");
