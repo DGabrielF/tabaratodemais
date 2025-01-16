@@ -1,6 +1,7 @@
 import { Entry } from "../../components/Base/Entry/Entry.js";
 import { Toast } from "../../components/Base/Toast/Toast.js";
 import { Firestore } from "../../scripts/services/firebase/firestore.js";
+import { ToolsDate } from "../../scripts/tools/ToolsDate.js";
 import { ToolsHTML } from "../../scripts/tools/ToolsHTML.js"
 export const Edit = {
   create: () => {},
@@ -76,16 +77,17 @@ Edit.open = (object) => {
   if (Edit.newData) {
     Edit.title.textContent = "Adicionar Produto";
     Edit.name.value = "";
-    Edit.name.disabled = (object);
-    Edit.over.value = "";
+    console.log("getTodayDateStrEn", ToolsDate.getTodayDateStrEn())
+    Edit.over.value = ToolsDate.getTodayDateStrEn();
     Edit.quantity.value = "";
     Edit.deleteButton.disabled = true;
   } else {
     Edit.data = object;
     Edit.title.textContent = "Editar Produto";
     Edit.name.value = object.name;
-    Edit.name.disabled = (object);
-    Edit.over.value = object.over;
+    console.log("object.over", object.over)
+    console.log("turnEnToPt", ToolsDate.turnPtToEn(object.over))
+    Edit.over.value = ToolsDate.turnPtToEn(object.over);
     Edit.quantity.value = object.quantity;
     Edit.deleteButton.disabled = false;
   }
